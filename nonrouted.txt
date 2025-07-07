@@ -1,0 +1,114 @@
+// app.get("/testListings", async (req,res) =>{
+//     let sampleListing = new Listings ({
+//         title : "Raja Palace",
+//         description : "Palace of a King",
+//         price : 30000,
+//         location : "Rajasthan",
+//         country : "Endya",
+//     })
+
+//     await sampleListing.save();
+
+//     console.log("listing was created");
+//     res.send("listing was saved");
+// })
+
+// const validateListing = (req,res,next) =>{
+//     let {error}= listingSchema.validate(req.body);
+//     // console.log(result); 
+//     if(error){
+//         let errMsg = error.details.map((el) => el.message).join(", ");
+//         throw new expressError(400,error)
+//     }
+//     next();
+// };
+
+// const validateReview = (req,res,next) =>{
+//     let {error}= reviewSchema.validate(req.body);
+//     // console.log(result); 
+//     if(error){
+//         let errMsg = error.details.map((el) => el.message).join(", ");
+//         throw new expressError(400,error)
+//     }
+//     next();
+// }
+
+// //INDEX ROUTE
+// app.get("/listings", wrapAsync ( async (req,res) =>{
+//     const allListings = await Listings.find();
+//     res.render("listings/index.ejs",{allListings});
+// }));
+
+// // NEW FORM
+// app.get("/listings/new",(req,res) =>{ // isko hum id wale se uppar rakhhe h taaki 
+//     res.render("listings/new.ejs");  // jab route pe jaate toh id wale ki wajas se 
+// })                                    // error na aaye
+
+// // NEW ROUTE
+// app.post("/listings",validateListing, wrapAsync ( async (req,res,next) =>{
+    
+//     let newListing = Listings(req.body.listing);
+//     await newListing.save();
+//     res.redirect("/listings");
+   
+// })
+// );
+
+// // EDIT ROUTE
+// app.get("/listings/:id/edit" ,validateListing, wrapAsync ( async (req,res) =>{
+//     let { id }= req.params;
+//     const listing = await Listings.findById(id);
+//     res.render("listings/edit.ejs",{listing});
+// }));
+
+// // SHOW ROUTE
+// app.get("/listings/:id", wrapAsync ( async (req,res) =>{
+//     let { id }= req.params;
+//     const listing = await Listings.findById(id).populate("review");
+//     res.render("listings/show.ejs",{listing});
+// }));
+
+
+
+// // UPDATE ROUTE
+// app.put("/listings/:id",validateListing, wrapAsync ( async (req,res) =>{
+//     // if(!req.body.listing){
+//     //     throw new expressError(400, "Send valid data");
+//     // }
+//     let {id} = req.params;
+//     await Listings.findByIdAndUpdate(id, {...req.body.listing});
+//     res.redirect(`/listings/${id}`);
+// }));
+
+// // DESTROY ROUTE
+// app.delete("/listings/:id", wrapAsync ( async (req,res) =>{
+//     let { id } = req.params;
+//     let delShi = await Listings.findByIdAndDelete(id);
+//     res.redirect("/listings")
+//     console.log(delShi);
+// }));
+
+// // Review requests
+// app.post("/listings/:id/reviews", validateReview, wrapAsync (async (req,res) =>{
+//     let listing = await Listings.findById(req.params.id)
+//     let newRev = new Reviews(req.body.review)
+
+//     listing.review.push(newRev)
+
+//     await newRev.save()
+//     await listing.save()
+
+//     console.log("review saved")
+//     // res.send("Done");
+//     res.redirect(`/listings/${listing._id}`);
+    
+// }));
+
+// // Destroy reviews
+// app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req,res) =>{
+//     let {id, reviewId} = req.params;
+//     await Listings.findByIdAndUpdate(id, {$pull : {review : reviewId }});
+//     await Reviews.findByIdAndDelete(reviewId);
+
+//     res.redirect(`/listings/${id}`);
+// }));

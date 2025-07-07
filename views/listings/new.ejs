@@ -1,0 +1,45 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="row">
+    <div class="col-8 offset-2">
+        <br><br>
+    <h1>Enter Details</h1><br>
+    <form method="POST" action="/listings" novalidate class="needs-validation" >
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" placeholder="Enter Title" type="text" class="form-control" required/>
+            <div class="invalid-feedback">Please Enter a Title</div>
+            <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="listing[description]" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter short precise description.</div>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image Url</label>
+            <input name="listing[image][url]" placeholder="Enter image URL" type="text" class="form-control"/>
+            <div class="invalid-feedback">Please provide a working link</div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price" class="form-label">Price</label>
+                <input name="listing[price]" placeholder="Enter price"  class="form-control" required/>
+                <div class="invalid-feedback">Please Enter a valid price</div>
+            </div>
+            <div class="mb-3 col-md-8">
+                <label for="country" class="form-label">Country</label>
+                <input name="listing[country]" placeholder="Enter country" type="text" class="form-control" required/>
+                <div class="invalid-feedback">Please specify country</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" placeholder="Enter location" type="text" class="form-control" required/>
+            <div class="invalid-feedback">Please specify the location</div>
+        </div>
+        <br>
+        <button class="btn btn-dark add-btn">ADD</button>
+        <br><br><br>
+    </form>
+    </div>
+</div>    
