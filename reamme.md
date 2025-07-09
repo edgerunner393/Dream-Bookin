@@ -64,3 +64,18 @@ so we have the passport authentication techniques for so many things, google ,fa
 we also need to install " npm i passport-local-mongoose " to help with it's extra functionality with mongodb.
 
 we will use session for passport as for the while session the user won't change the password in between. in passport pdkdf2 hashing algo is used.
+
+We can directly use req.authenticate() and the passport will take care if the user is already logged in or not. We can put this method in an condition and only let user create new listing when logged in.
+
+process.on('warning', (warning) => {
+  console.log('⚠️ Warning triggered!');
+  console.log(warning.name);     // Should be 'DeprecationWarning'
+  console.log(warning.code);     // Should be 'DEP0044'
+  console.log(warning.message);  // Full message
+  console.trace();               // Print call stack
+});
+
+used the methods above to check where the warning was coming from, and it was from connect-flash module, remember we have to write it on top of the app.js after declaring it as an express app
+
+$env:NODE_OPTIONS="--trace-deprecation"; node app.js // this traces the quoted thing in our operations
+
