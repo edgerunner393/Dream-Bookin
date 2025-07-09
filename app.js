@@ -75,6 +75,7 @@ passport.deserializeUser(User.deserializeUser()); // this is destoring the sessi
 app.use((req,res,next) =>{
     res.locals.success = req.flash("success"); // we here the success is an array, so different success in diff pages
     res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
     next();
 })
 
