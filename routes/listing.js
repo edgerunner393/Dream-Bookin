@@ -23,9 +23,13 @@ router.get("/", wrapAsync ( async (req,res) =>{
 }));
 
 // NEW FORM
-router.get("/new",(req,res) =>{ // isko hum id wale se uppar rakhhe h taaki 
-    res.render("listings/new.ejs");  // jab route pe jaate toh id wale ki wajas se 
-})                                    // error na aaye
+router.get("/new",(req,res) =>{ //isko hum id wale se uppar rakhhe h taaki jab route pe jaaye toh id wale ki wajas se error na aaye
+    if(!req.isAuthenticated()){
+        req.flash("error","You must be logged in to create a listing");
+        return res.redirect("/login"); // yahan pe return lagana zaroori hai warna next line bhi execute ho jaayegi, or maybe error bhi aayega, login.ejs nhi likhna h bas login likhna h
+    }
+    res.render("listings/new.ejs");
+})
 
 // NEW ROUTE
 router.post("/",validateListing, wrapAsync ( async (req,res,next) =>{

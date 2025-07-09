@@ -1,5 +1,13 @@
 const express = require("express");
 const app = express();
+process.on('warning', (warning) => {
+  console.log('⚠️ Warning triggered!');
+  console.log(warning.name);     // Should be 'DeprecationWarning'
+  console.log(warning.code);     // Should be 'DEP0044'
+  console.log(warning.message);  // Full message
+  console.trace();               // Print call stack
+});
+
 const mongoose = require("mongoose");
 const Listings = require("./models/listing.js");
 const path = require("path");
