@@ -4,7 +4,7 @@ const wrapAsync = require("../util/wrapAsync.js");
 const {listingSchema , reviewSchema} = require("../schema.js");
 const expressError = require("../util/expressError.js");
 const Listings = require("../models/listing.js");
-const {isLoggedIn} = require("../middleware.js");
+const {isLoggedIn, saveRedirectUrl} = require("../middleware.js");
 
 const validateListing = (req,res,next) =>{
     let {error}= listingSchema.validate(req.body);
@@ -24,7 +24,7 @@ router.get("/", wrapAsync ( async (req,res) =>{
 }));
 
 // NEW FORM
-router.get("/new",isLoggedIn,(req,res) =>{ //isko hum id wale se uppar rakhhe h taaki jab route pe jaaye toh id wale ki wajas se error na aaye
+router.get("/new",  isLoggedIn,(req,res) =>{ //isko hum id wale se uppar rakhhe h taaki jab route pe jaaye toh id wale ki wajas se error na aaye
     // console.log(req.user); // req.user is set by passport.js, it contains the user information if logged in    
     res.render("listings/new.ejs");
 })
@@ -35,6 +35,7 @@ router.post("/",validateListing, isLoggedIn, wrapAsync ( async (req,res,next) =>
     if(!newListing.image.url){
         newListing.image.url = "https://images.unsplash.com/photo-1577852852977-30a744a0f652?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
     };
+    newListing.owner = req.user._id; // setting the owner of the listing to the logged in user
     await newListing.save();
     req.flash("success","New listing created");
     res.redirect("/listings");
@@ -57,7 +58,8 @@ router.get("/:id/edit" , validateListing, isLoggedIn, wrapAsync ( async (req,res
 // SHOW ROUTE
 router.get("/:id", wrapAsync ( async (req,res) =>{
     let { id }= req.params;
-    const listing = await Listings.findById(id).populate("review");
+    const listing = await Listings.findById(id).populate("review").populate("owner");
+    console.log(listing);
     if(!listing){
         req.flash("error","No such listing found");
         res.redirect("/listings");
