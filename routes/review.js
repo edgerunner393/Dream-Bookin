@@ -5,17 +5,10 @@ const expressError = require("../util/expressError.js");
 const {listingSchema , reviewSchema} = require("../schema.js");
 const Listings = require("../models/listing.js");
 const Reviews = require("../models/review.js");
+const {validateReview} = require("../middleware.js");
 
 
-const validateReview = (req,res,next) =>{
-    let {error}= reviewSchema.validate(req.body);
-    // console.log(result); 
-    if(error){
-        let errMsg = error.details.map((el) => el.message).join(", ");
-        throw new expressError(400,error)
-    }
-    next();
-};
+
 
 // Review requests
 router.post("/", validateReview, wrapAsync (async (req,res) =>{
