@@ -49,7 +49,7 @@ router.get("/:id/edit" , validateListing, isLoggedIn, isOwner, wrapAsync ( async
 // SHOW ROUTE
 router.get("/:id", wrapAsync ( async (req,res) =>{
     let { id }= req.params;
-    const listing = await Listings.findById(id).populate("review").populate("owner");
+    const listing = await Listings.findById(id).populate({path : "review", populate: {path : "author"}}).populate("owner");
     console.log(listing);
     if(!listing){
         req.flash("error","No such listing found");

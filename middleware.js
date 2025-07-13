@@ -1,4 +1,5 @@
 const Listings = require("./models/listing");
+const Reviews = require("./models/review.js")
 const {listingSchema , reviewSchema} = require("./schema.js");
 const expressError = require("./util/expressError.js");
 
@@ -48,3 +49,14 @@ module.exports.validateReview = (req,res,next) =>{
     }
     next();
 };
+
+
+module.exports.isReviewer= async (req,res,next) =>{
+    let {id, reviewId} = req.params;
+    let review = await Reviews.findById(reviewId);
+    if(!review.author._id.equals(req.user._id)){
+        req.flash("error","You are not authorized to delete this review.");
+        return res.redirect(`/listings/${id}`);
+    }
+    next();
+}
