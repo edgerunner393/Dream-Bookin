@@ -55,7 +55,7 @@ router.get("/:id", wrapAsync ( async (req,res) =>{
         req.flash("error","No such listing found");
         res.redirect("/listings");
     }else{
-    res.render("listings/show.ejs",{listing});
+        res.render("listings/show.ejs",{listing});
     }
 }));
 

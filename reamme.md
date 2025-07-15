@@ -1,6 +1,6 @@
 npm i express-session
 npm i connect-flash
-npm install cookie-parser
+npm i cookie-parser
 npm i joi
 npm i passport
 npm i passport-local
