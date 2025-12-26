@@ -105,6 +105,6 @@ app.use((err,req,res,next) =>{
 })
 
 app.listen(8080, () =>{
-    console.log("http://localhost:8080");
+    console.log("http://localhost:8080/listings");  // change this after the login page
     
 })
